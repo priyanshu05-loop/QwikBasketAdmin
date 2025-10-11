@@ -93,7 +93,7 @@ const VerifyOtpScreen = () => {
         {/* Confirm Button */}
         <TouchableOpacity
           style={styles.confirmButton}
-          onPress={() => naviagtion.navigate("AppDrawer")}
+          onPress={() => naviagtion.navigate("Home")}
         >
           <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
