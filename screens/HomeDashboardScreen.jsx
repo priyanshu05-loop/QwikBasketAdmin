@@ -7,6 +7,8 @@ import {
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
 import Svg, { Circle, G, Path } from "react-native-svg"; // Corrected import
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { colors } from '../constants/Admintheme';
 
 const statsData = [
   {
@@ -122,10 +124,7 @@ const HomeDashboardScreen = () => {
 
           {/* Right: Notification + Profile */}
           <View style={styles.rightPart}>
-            <Image
-              source={require("../assets/images/bellIcon.png")}
-              style={styles.icon}
-            />
+              <Ionicons name="notifications-outline" size={24} color={colors.textDark} />
             <Image
               source={require("../assets/images/profileIcon.png")}
               style={styles.profileIcon}
@@ -222,12 +221,12 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     width: wp(100),
-    height: hp(16),
+    height: hp(15),
     backgroundColor: "#FFFFFF",
   },
   headerContent: {
     position: "absolute",
-    top: hp(8.5),
+    top: hp(8),
     left: wp(5),
     right: wp(5),
     flexDirection: "row",

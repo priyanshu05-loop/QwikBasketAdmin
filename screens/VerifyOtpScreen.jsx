@@ -18,7 +18,7 @@ import {
 import { colors } from "../constants/theme"; // Import your theme
 
 const VerifyOtpScreen = () => {
-  const naviagtion = useNavigation();
+  const navigation = useNavigation();
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputs = useRef([]);
 
@@ -93,7 +93,7 @@ const VerifyOtpScreen = () => {
         {/* Confirm Button */}
         <TouchableOpacity
           style={styles.confirmButton}
-          onPress={() => naviagtion.navigate("AppDrawer")}
+          onPress={() => navigation.navigate("MainApp")}
         >
           <Text style={styles.buttonText}>Confirm</Text>
         </TouchableOpacity>
