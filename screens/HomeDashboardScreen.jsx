@@ -1,12 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { height, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { responsiveFontSize } from "react-native-responsive-dimensions";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Circle, G, Path } from "react-native-svg"; // Corrected import
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { colors, typography } from '../constants/Admintheme';
 
 const statsData = [
   {
@@ -104,35 +107,20 @@ const PieChart = () => {
 const HomeDashboardScreen = () => {
   const navigation = useNavigation();
   return (
+  <SafeAreaView style={styles.safeArea}>
     <View style={styles.container}>
-      {/* HEADER */}
-      <View style={styles.header}>
-        <View style={styles.rectangleBox}></View>
-        <View style={styles.headerContent}>
-          {/* Left: Menu - 3. Wrap in TouchableOpacity and call openDrawer */}
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <Image
-              source={require("../assets/images/menuIcon.png")}
-              style={styles.icon}
-            />
-          </TouchableOpacity>
-
-          {/* Center: Title */}
-          <Text style={styles.title}>Dashboard</Text>
-
-          {/* Right: Notification + Profile */}
-          <View style={styles.rightPart}>
-            <Image
-              source={require("../assets/images/bellIcon.png")}
-              style={styles.icon}
-            />
-            <Image
-              source={require("../assets/images/profileIcon.png")}
-              style={styles.profileIcon}
-            />
-          </View>
-        </View>
-      </View>
+       <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
+      {/*Header*/}
+              <View style={styles.header}>
+                    <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                        <Ionicons name="menu" size={28} color={colors.textDark} />
+                    </TouchableOpacity>
+                    <Text style={styles.headerTitle}>Dashboard</Text>
+                    <View style={styles.headerIcons}>
+                        <TouchableOpacity><Ionicons name="notifications-outline" size={24} color={colors.textDark} /></TouchableOpacity>
+                        <TouchableOpacity><Image source={{ uri: 'https://cdn.mos.cms.futurecdn.net/v2/t:0,l:280,cw:720,ch:720,q:80,w:720/ZyiBw5xgHMWSEikFkK3mH8.jpg' }} style={styles.profilePic} /></TouchableOpacity>
+                    </View>
+                </View>
 
       {/* MAIN CONTENT */}
       <View style={styles.mainContainter}>
@@ -161,7 +149,7 @@ const HomeDashboardScreen = () => {
           <View style={styles.pendingBox}>
             <View style={styles.pendingHeader}>
               <Text style={styles.pendingTitle}>⚠️ Pending Verification</Text>
-              <TouchableOpacity style={styles.verifyBtn}>
+              <TouchableOpacity style={styles.verifyBtn} onPress={() =>navigation.navigate('PendingVerification')}>
                 <Text style={styles.verifyBtnText}>Verify Now</Text>
               </TouchableOpacity>
             </View>
@@ -202,6 +190,7 @@ const HomeDashboardScreen = () => {
         </ScrollView>
       </View>
     </View>
+    </SafeAreaView>
   );
 };
 
@@ -212,52 +201,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#F8F9FA",
   },
-  header: {
-    position: "relative",
-    width: wp(100),
-    height: hp(20),
-  },
-  rectangleBox: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: wp(100),
-    height: hp(16),
-    backgroundColor: "#FFFFFF",
-  },
-  headerContent: {
-    position: "absolute",
-    top: hp(8.5),
-    left: wp(5),
-    right: wp(5),
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: wp(90),
-  },
-  title: {
-    flex: 1,
-    textAlign: "center",
-    fontSize: responsiveFontSize(2.8),
-    fontWeight: "900",
-    color: "#003032",
-  },
-  rightPart: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: wp(3.2),
-  },
-  icon: {
-    width: wp(6),
-    height: wp(6),
-    resizeMode: "contain",
-  },
-  profileIcon: {
-    width: wp(9),
-    height: wp(9),
-    borderRadius: wp(4),
-    resizeMode: "cover",
-  },
+
+  safeArea: { flex: 1, backgroundColor: colors.background },
+  
+  
+      header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: hp(2), paddingHorizontal: wp(4), backgroundColor: colors.surface, borderBottomWidth: 1, borderBottomColor: colors.border },
+          headerTitle: { ...typography.titleBold(height), color: colors.textDark, textAlign: 'center' },
+          headerIcons: { flexDirection: 'row', alignItems: 'center', gap: wp(4) },
+          
+          profilePic: {  marginLeft:10, width: wp(9),   height: wp(9),
+              borderRadius: wp(8),
+              resizeMode: "cover", },
+  
+ 
   mainContainter: {
     flex: 1,
     width: wp(90),

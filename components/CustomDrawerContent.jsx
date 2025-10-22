@@ -1,141 +1,177 @@
-import { DrawerContentScrollView } from "@react-navigation/drawer";
-import { useNavigation } from "@react-navigation/native";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  DrawerContentScrollView
+} from '@react-navigation/drawer';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { colors, SIZES, typography } from '../constants/Admintheme';
 
-// Example icon imports. Update these paths and icons as needed:
-const icons = {
-  Dashboard: require("../assets/images/CategoriesIcon.png"),
-  Categories: require("../assets/images/CategoriesIcon.png"),
-  Products: require("../assets/images/CategoriesIcon.png"),
-  Customers: require("../assets/images/CategoriesIcon.png"),
-  Orders: require("../assets/images/CategoriesIcon.png"),
-  Payments: require("../assets/images/CategoriesIcon.png"),
-  Offers: require("../assets/images/CategoriesIcon.png"),
-  Profile: require("../assets/images/CategoriesIcon.png"),
-  Settings: require("../assets/images/CategoriesIcon.png"),
-};
-
-const drawerItems = [
-  { label: "Dashboard", icon: icons.Dashboard, screen: "Dash" },
-  { label: "Categories", icon: icons.Categories },
-  { label: "Products", icon: icons.Products },
-  { label: "Customers", icon: icons.Customers },
-  { label: "Orders", icon: icons.Orders },
-  { label: "Payments", icon: icons.Payments },
-  { label: "Offers", icon: icons.Offers },
-  { label: "Profile", icon: icons.Profile },
-  { label: "Settings", icon: icons.Settings },
-];
+import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const CustomDrawerContent = (props) => {
-  const navigation = useNavigation();
+  const { state, navigation } = props;
+  const { routes, index } = state;
+  const focusedRoute = routes[index].name;
+
+
+  const DRAWER_ITEMS = [
+    {
+      label: 'Dashboard',
+      icon: 'grid-outline',
+      routeName: 'Dashboard',
+    },
+    {
+      label: 'Categories',
+      icon: 'apps-outline',
+      routeName: 'Categories',
+    },
+    {
+      label: 'Products',
+      icon: 'cube-outline',
+      routeName: 'Products',
+    },
+    {
+        label: 'Customers',
+        icon: 'people-outline',
+        routeName: 'Customers',
+    },
+    {
+      label: 'Orders',
+      icon: 'document-text-outline',
+      routeName: 'Orders',
+    },
+    {
+      label: 'Payments',
+      icon: 'card-outline',
+      routeName: 'Payments',
+    },
+    {
+      label: 'Offers',
+      icon: 'gift-outline',
+      routeName: 'Offers',
+    },
+    {
+      label: 'Profile',
+      icon: 'person-circle-outline',
+      routeName: 'Profile',
+    },
+    {
+      label: 'Settings',
+      icon: 'settings-outline',
+      routeName: 'Settings',
+    },
+  ];
+
   return (
-    <View style={{ flex: 1 }}>
-      <DrawerContentScrollView
-        {...props}
-        contentContainerStyle={{ paddingTop: 0 }}
-      >
-        <View style={styles.drawerHeader}>
-          <Text style={styles.drawerTitle}>Qwikbasket</Text>
+    <View style={styles.container}>
+      <DrawerContentScrollView {...props} contentContainerStyle={{ paddingTop: 0 }}>
+        <View style={styles.header}>
+            <Text style={styles.headerTitle}>Qwikbasket</Text>
         </View>
-        <View style={{ flex: 1, marginTop: 18 }}>
-          {drawerItems.map((item, idx) => (
-            <TouchableOpacity
-              key={idx}
-              style={[
-                styles.drawerItem,
-                props.state.index === idx && styles.selectedDrawerItem,
-              ]}
-              onPress={() => {
-                if (item.screen) navigation.navigate(item.screen);
-              }}
-            >
-              <Image source={item.icon} style={styles.drawerIcon} />
-              <Text
-                style={[
-                  styles.drawerLabel,
-                  props.state.index === idx && styles.selectedDrawerLabel,
-                ]}
-              >
-                {item.label}
-              </Text>
-            </TouchableOpacity>
-          ))}
+
+        <View style={styles.drawerItemsContainer}>
+            {DRAWER_ITEMS.map((item) => {
+                const isFocused = focusedRoute === item.routeName;
+                return (
+                    <TouchableOpacity
+                        key={item.label}
+                        style={[styles.drawerItem, isFocused && styles.drawerItemFocused]}
+                        onPress={() => navigation.navigate(item.routeName)}
+                    >
+                        <Icon 
+                            name={item.icon} 
+                            size={22} 
+                            color={isFocused ? colors.primary : colors.text} 
+                            style={styles.icon}
+                        />
+                        <Text style={[styles.drawerLabel, isFocused && styles.drawerLabelFocused]}>
+                            {item.label}
+                        </Text>
+                    </TouchableOpacity>
+                );
+            })}
         </View>
+
       </DrawerContentScrollView>
-      {drawerItems.map((item, idx) => (
-        <TouchableOpacity
-          key={idx}
-          style={[
-            styles.drawerItem,
-            props.state.index === idx && styles.selectedDrawerItem,
-          ]}
-          onPress={() => {
-            if (item.screen) navigation.navigate(item.screen);
-          }}
-        >
-          <Image source={item.icon} style={styles.drawerIcon} />
-          <Text
-            style={[
-              styles.drawerLabel,
-              props.state.index === idx && styles.selectedDrawerLabel,
-            ]}
-          >
-            {item.label}
-          </Text>
+
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.signOutButton} onPress={() => { /* Handle Sign Out */ }}>
+            <MaterialCommunityIcons 
+                name="logout" 
+                size={22} 
+                color={colors.textDark} 
+                style={styles.signOutIcon}
+            />
+          <Text style={styles.signOutLabel}>Sign Out</Text>
         </TouchableOpacity>
-      ))}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  drawerHeader: {
-    padding: 24,
-    paddingBottom: 12,
+  container: {
+    flex: 1,
   },
-  drawerTitle: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#123234",
+  header: {
+    paddingHorizontal: 20,
+    paddingTop: 40,
+    paddingBottom: 20,
+    marginBottom: 10,
+  },
+  headerTitle: {
+    ...typography.titleBold,
+    fontSize: 24, // A bit larger for the logo
+    color: colors.textDark,
+  },
+  drawerItemsContainer: {
+    paddingHorizontal: 10,
   },
   drawerItem: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: 12,
-    paddingHorizontal: 22,
-    borderRadius: 8,
-    marginBottom: 4,
+    paddingHorizontal: 15,
+    borderRadius: SIZES.radius,
+    marginBottom: 5,
   },
-  selectedDrawerItem: {
-    backgroundColor: "#F0F5FB",
+  drawerItemFocused: {
+    backgroundColor: colors.primaryLight,
   },
-  drawerIcon: {
-    width: 22,
-    height: 22,
-    marginRight: 18,
-    resizeMode: "contain",
+  icon: {
+    marginRight: 20,
   },
   drawerLabel: {
+    ...typography.paragraphMedium,
+    color: colors.text,
     fontSize: 16,
-    color: "#222C2F",
-    fontWeight: "600",
   },
-  selectedDrawerLabel: {
-    color: "#00624A",
+  drawerLabelFocused: {
+    color: colors.primary,
+    ...typography.paragraphMedium,
+     fontSize: 16,
   },
-  signOut: {
-    margin: 22,
-    backgroundColor: "#DEF7D6",
-    borderRadius: 8,
-    paddingVertical: 14,
-    alignItems: "center",
-    justifyContent: "center",
+  footer: {
+    padding: 20,
+    borderTopColor: colors.border,
+    borderTopWidth: 1,
+    backgroundColor: colors.white,
   },
-  signOutText: {
-    color: "#225B10",
-    fontSize: 17,
-    fontWeight: "bold",
+  signOutButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#E5F3E4', // A light green color from your design
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: SIZES.radius,
+  },
+  signOutIcon: {
+      marginRight: 15,
+      transform: [{ rotate: '180deg'}]
+  },
+  signOutLabel: {
+    ...typography.button,
+    color: colors.textDark,
+    fontSize: 16,
   },
 });
 

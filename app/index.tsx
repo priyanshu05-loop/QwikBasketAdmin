@@ -2,6 +2,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import AppNavigation from "../navigations/appNavigation";
 
 // Keep the splash screen visible while we fetch resources
@@ -27,8 +28,15 @@ export default function App() {
   }
 
   return (
+
+    <SafeAreaProvider>     
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <AppNavigation />
+   
+        <AppNavigation />
+     
     </GestureHandlerRootView>
+    </SafeAreaProvider>
+    
+  
   );
 }

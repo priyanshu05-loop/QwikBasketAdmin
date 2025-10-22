@@ -1,20 +1,20 @@
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
 import {
-  View,
-  Text,
   Image,
+  ScrollView,
   StyleSheet,
+  Text,
   TextInput,
   TouchableOpacity,
-  ScrollView,
+  View,
 } from "react-native";
-import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
 import { responsiveFontSize } from "react-native-responsive-dimensions";
-import { useNavigation } from "@react-navigation/native";
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginScreen = () => {
   const navigation = useNavigation();

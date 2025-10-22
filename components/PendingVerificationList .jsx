@@ -1,7 +1,6 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { responsiveFontSize } from "react-native-responsive-dimensions";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from "react-native-responsive-screen";
-
 // ...pendingData from above...
 const pendingData = [
   {
@@ -47,7 +46,8 @@ const pendingData = [
 ];
 
 
-const PendingVerificationList = () => (
+const PendingVerificationList = ({navigation}) => (
+ 
   <View style={styles.pendingBox}>
     <View style={styles.pendingHeader}>
       <Text style={styles.pendingTitle}>Pending Verification</Text>
@@ -70,7 +70,7 @@ const PendingVerificationList = () => (
             <Text style={styles.details}>{item.phone}</Text>
             <Text style={styles.details}>{item.location}</Text>
           </View>
-          <TouchableOpacity style={styles.detailsBtn}>
+          <TouchableOpacity style={styles.detailsBtn} onPress={() => navigation.navigate('ViewDetails')}>
             <Text style={styles.btnText}>VIEW DETAILS</Text>
           </TouchableOpacity>
         </View>
