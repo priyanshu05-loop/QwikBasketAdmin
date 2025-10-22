@@ -45,7 +45,7 @@ const EditCustomerScreen = ({ navigation, route }) => {
   // --- STATE MANAGEMENT ---
   const [status, setStatus] = useState(customer.status);
  
-  const [creditDays, setCreditDays] = useState('30'); 
+  const [creditDays, setCreditDays] = useState(String(customer.creditDays));
   const [isSaving, setIsSaving] = useState(false);
 
   const handleSaveChanges = async () => {
